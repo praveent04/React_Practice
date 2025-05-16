@@ -103,3 +103,64 @@ function App() {
 }
 
 export default App
+
+/*
+====================================
+PASSWORD GENERATOR: CODE EXPLANATION
+====================================
+
+1. STATE MANAGEMENT
+   - length: Stores the password length (default: 8)
+   - numbers: Boolean flag to include numbers in the password (default: false)
+   - charAllowed: Boolean flag to include special characters (default: false)
+   - password: Stores the generated password string
+
+2. REFS
+   - passwordRef: Reference to the password input element for text selection and copying
+
+3. HOOKS USED
+   - useState: For managing component state (length, numbers, charAllowed, password)
+   - useCallback: For memoizing functions to prevent unnecessary re-renders
+   - useEffect: For triggering password generation when dependencies change
+   - useRef: For accessing and manipulating DOM elements directly
+
+4. FUNCTIONS
+   - passwordGenerator:
+     • Wrapped in useCallback to prevent re-creation on each render
+     • Creates a base string of uppercase and lowercase letters
+     • Adds numbers and special characters conditionally based on state
+     • Generates random characters based on the specified length
+     • Updates the password state with the generated value
+     • Dependencies: [length, numbers, charAllowed, setPassword]
+
+   - copyPasswordToClipboard:
+     • Also wrapped in useCallback for performance optimization
+     • Selects the text in the password input field using the ref
+     • Uses the Clipboard API to copy the selected text
+     • Dependencies: [password]
+
+5. SIDE EFFECTS
+   - useEffect hook triggers the passwordGenerator function whenever:
+     • Password length changes
+     • Number inclusion preference changes
+     • Special character inclusion preference changes
+     • The passwordGenerator function itself changes
+
+6. UI COMPONENTS
+   - A container div with styling for the entire password generator
+   - Password display field with copy button
+   - Length slider with range from 6 to 100
+   - Checkboxes for toggling numbers and special characters
+
+7. EVENT HANDLERS
+   - Range input: Updates length state when slider value changes
+   - Number checkbox: Toggles the numbers state
+   - Character checkbox: Toggles the charAllowed state
+   - Copy button: Triggers the copyPasswordToClipboard function
+
+8. RENDERING OPTIMIZATION
+   - useCallback prevents function recreation on every render
+   - State updates trigger selective re-rendering
+
+=======================================
+*/
