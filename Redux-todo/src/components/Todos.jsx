@@ -1,23 +1,47 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import {removeTodo} from '../features/todo/todoSlice'
+/**
+ * Todos Component
+ * 
+ * This component displays a list of todo items from the Redux store and 
+ * provides UI for removing individual todo items.
+ * It demonstrates how to use useSelector to access state and useDispatch
+ * to trigger state changes in Redux.
+ */
+import React from 'react' // Import React
+import { useSelector, useDispatch } from 'react-redux' // Import hooks for Redux state and actions
+import {removeTodo} from '../features/todo/todoSlice' // Import action creator for removing todos
 
+/**
+ * Todos Component
+ * 
+ * Displays a list of todo items with delete functionality
+ * 
+ * @returns {JSX.Element} A list of todo items with delete buttons
+ */
 function Todos() {
+    // Access todos array from Redux store using useSelector hook
+    // The state parameter represents the entire Redux store state
+    // This line extracts just the todos array from that state
     const todos = useSelector(state => state.todos)
+    
+    // Get dispatch function to send actions to Redux store
     const dispatch = useDispatch()
-
+  // Render the component UI
   return (
     <>
     <div>Todos</div>
     <ul className="list-none">
+        {/* Map over todos array to render a list item for each todo */}
         {todos.map((todo) => (
           <li
             className="mt-4 flex justify-between items-center bg-zinc-800 px-4 py-2 rounded"
-            key={todo.id}
+            key={todo.id} // Important: Key prop helps React identify changed items efficiently
           >
+            {/* Display the todo text */}
             <div className='text-white'>{todo.text}</div>
+            
+            {/* Button to remove todo - dispatches removeTodo action with todo.id */}
             <button
-             onClick={() => dispatch(removeTodo(todo.id))}
+             onClick={() => dispatch(removeTodo(todo.id))} // Dispatch action with todo ID when clicked
               className="text-white bg-red-500 border-0 py-1 px-4 focus:outline-none hover:bg-red-600 rounded text-md"
             >
               <svg
@@ -37,9 +61,9 @@ function Todos() {
             </button>
           </li>
         ))}
-      </ul>
-    </>
+      </ul>    </>
   )
 }
 
+// Export the Todos component as the default export
 export default Todos
